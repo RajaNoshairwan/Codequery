@@ -42,6 +42,11 @@ if (keysPressed.contains(LogicalKeyboardKey.arrowRight)) moveDirection.x = 1;
 if (keysPressed.contains(LogicalKeyboardKey.arrowUp)) moveDirection.y = -1;
 if (keysPressed.contains(LogicalKeyboardKey.arrowDown)) moveDirection.y = 1;
 moveDirection.normalize();
+
+    // Interact via 'F' key
+    if (keysPressed.contains(LogicalKeyboardKey.keyF)) {
+      game.interact();
+    }
 return true;
 }
 
