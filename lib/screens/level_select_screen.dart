@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:codequest/game/learning_game.dart';
-import 'package:flame/game.dart';
-import '../game/quiz_overlay.dart';
+import 'game_screen.dart';
 
 
 class LevelSelectScreen extends StatelessWidget {
@@ -9,19 +7,10 @@ const LevelSelectScreen({super.key});
 
 
 void _startGame(BuildContext context, String difficulty) {
-final game = LearningGame(difficulty: difficulty);
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => GameWidget(
-          game: game,
-          overlayBuilderMap: {
-            'QuizOverlay': (context, game) => QuizOverlay(game: game as LearningGame),
-          },
-          initialActiveOverlays: const [],
-        ),
-      ),
-    );
+Navigator.push(
+  context,
+  MaterialPageRoute(builder: (_) => GameScreen(level: difficulty)),
+);
 }
 
 
