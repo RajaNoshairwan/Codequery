@@ -9,7 +9,7 @@ runApp(const CodeQuestApp());
 
 
 class CodeQuestApp extends StatelessWidget {
-const CodeQuestApp({Key? key}) : super(key: key);
+const CodeQuestApp({super.key});
 
 
 @override

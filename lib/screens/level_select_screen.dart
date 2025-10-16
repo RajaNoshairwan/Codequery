@@ -5,7 +5,7 @@ import '../game/quiz_overlay.dart';
 
 
 class LevelSelectScreen extends StatelessWidget {
-const LevelSelectScreen({Key? key}) : super(key: key);
+const LevelSelectScreen({super.key});
 
 
 void _startGame(BuildContext context, String difficulty) {
