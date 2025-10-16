@@ -8,7 +8,7 @@ import 'laptop.dart';
 
 
 class Player extends SpriteComponent
-    with HasGameReference<LearningGame>, CollisionCallbacks, KeyboardHandler {
+    with HasGameRef<LearningGame>, CollisionCallbacks, KeyboardHandler {
 final double speed = 150;
 
 
@@ -17,7 +17,7 @@ Player() : super(size: Vector2(64, 64));
 
 @override
   Future<void> onLoad() async {
-    sprite = await gameRef.loadSprite('assets/images/player.png');
+    sprite = await Sprite.load('assets/images/player.png');
     add(RectangleHitbox());
   }
 
@@ -30,12 +30,12 @@ void update(double dt) {
 super.update(dt);
 position += moveDirection * speed * dt;
 // clamp to screen
-position.clamp(Vector2.zero() + size/2, gameRef.size - size/2);
+  position.clamp(Vector2.zero() + size/2, game.size - size/2);
 }
 
 
 @override
-  bool onKeyEvent(RawKeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
+  bool onKeyEvent(KeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
 // basic keyboard support for debugging
 moveDirection.setZero();
 if (keysPressed.contains(LogicalKeyboardKey.arrowLeft)) moveDirection.x = -1;
@@ -52,7 +52,7 @@ return true;
     super.onCollision(intersectionPoints, other);
 if (other is Laptop) {
 // when colliding with laptop, show quiz overlay
-(gameRef as LearningGame).showQuiz();
+  game.showQuiz();
 }
 if (other is Door) {
 if (other.isOpen) {

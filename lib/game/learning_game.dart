@@ -1,7 +1,6 @@
 import 'package:flame/components.dart';
 import 'package:flame/game.dart';
 import 'package:flame/events.dart';
-import 'package:flame/collisions.dart';
 import 'player.dart';
 import 'door.dart';
 import 'laptop.dart';
