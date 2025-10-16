@@ -1,6 +1,5 @@
 import 'package:flame/components.dart';
 import 'package:flame/collisions.dart';
-import 'package:flame/input.dart';
 import 'package:flutter/services.dart';
 import 'learning_game.dart';
 import 'door.dart';
@@ -8,7 +7,7 @@ import 'laptop.dart';
 
 
 class Player extends SpriteComponent
-    with HasGameRef<LearningGame>, CollisionCallbacks, KeyboardHandler {
+    with HasGameReference<LearningGame>, CollisionCallbacks, KeyboardHandler {
 final double speed = 150;
 
 
