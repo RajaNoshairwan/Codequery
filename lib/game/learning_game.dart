@@ -5,6 +5,7 @@ import 'player.dart';
 import 'package:flutter/material.dart' show Offset;
 import 'door.dart';
 import 'laptop.dart';
+import '../utils/game_assets.dart';
 
 
 class LearningGame extends FlameGame
@@ -21,12 +22,12 @@ LearningGame({this.difficulty = 'Easy', this.onMessage});
 
 @override
 Future<void> onLoad() async {
-await images.loadAll([ 'assets/images/player.png', 'assets/images/door_closed.png', 'assets/images/door_open.png', 'assets/images/laptop.png', 'assets/images/background.png' ]);
+await images.loadAll([ 'assets/images/${GameAssets.player}', 'assets/images/${GameAssets.doorClosed}', 'assets/images/${GameAssets.doorOpen}', 'assets/images/${GameAssets.laptop}', 'assets/images/${GameAssets.background}' ]);
 
 
 // background
 add(SpriteComponent()
-..sprite = await loadSprite('assets/images/background.png')
+..sprite = await loadSprite('assets/images/${GameAssets.background}')
 ..size = size);
 
 

@@ -1,7 +1,9 @@
+import 'package:codequest/utils/game_assets.dart';
 import 'package:flame/components.dart';
 import 'package:flame/collisions.dart';
 import 'package:flutter/services.dart';
 import 'learning_game.dart';
+import '../utils/game_assets.dart';
 import 'door.dart';
 import 'laptop.dart';
 
@@ -16,9 +18,9 @@ Player() : super(size: Vector2(64, 64));
 
 @override
   Future<void> onLoad() async {
-    sprite = await Sprite.load('assets/images/player.png');
-    add(RectangleHitbox());
-  }
+  sprite = Sprite(game.images.fromCache('assets/images/${GameAssets.player}'));
+  add(RectangleHitbox());
+}
 
 
 Vector2 moveDirection = Vector2.zero();
