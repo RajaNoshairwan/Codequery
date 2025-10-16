@@ -14,8 +14,7 @@ class Player extends SpriteComponent
 
   @override
   Future<void> onLoad() async {
-    sprite =
-        Sprite(game.images.fromCache('assets/images/${GameAssets.player}'));
+    sprite = Sprite(game.images.fromCache(GameAssets.player));
     add(RectangleHitbox());
   }
 
