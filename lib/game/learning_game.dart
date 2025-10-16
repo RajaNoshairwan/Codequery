@@ -2,6 +2,7 @@ import 'package:flame/components.dart';
 import 'package:flame/game.dart';
 import 'package:flame/events.dart';
 import 'player.dart';
+import 'package:flutter/material.dart' show Offset;
 import 'door.dart';
 import 'laptop.dart';
 
