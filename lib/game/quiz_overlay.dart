@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
-final LearningGame game;
-const QuizOverlay({Key? key, required this.game}) : super(key: key);
+import '../data/quiz_questions.dart';
+import 'learning_game.dart';
 
+class QuizOverlay extends StatefulWidget {
+  final LearningGame game;
+  const QuizOverlay({super.key, required this.game});
 
-@override
-State<QuizOverlay> createState() => _QuizOverlayState();
+  @override
+  State<QuizOverlay> createState() => _QuizOverlayState();
 }
 
 
@@ -21,7 +24,7 @@ q = quizQuestions.first; // choose first question for prototype
 }
 
 
-void submit() {
+  void submit() {
 final input = controller.text.trim();
 attempts += 1;
 if (input.toLowerCase() == q['answer']!.toLowerCase()) {

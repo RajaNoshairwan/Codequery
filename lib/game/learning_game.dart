@@ -1,13 +1,14 @@
 import 'package:flame/components.dart';
 import 'package:flame/game.dart';
-import 'package:flame/input.dart';
+import 'package:flame/events.dart';
 import 'package:flame/collisions.dart';
 import 'player.dart';
 import 'door.dart';
 import 'laptop.dart';
 
 
-class LearningGame extends FlameGame with HasCollisionDetection, HasDraggables, HasTappables {
+class LearningGame extends FlameGame
+    with HasCollisionDetection, HasKeyboardHandlerComponents {
 final String difficulty;
 late Player player;
 late Door door;

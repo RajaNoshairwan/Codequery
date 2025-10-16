@@ -1,8 +1,14 @@
 import 'package:flame/components.dart';
+import 'package:flame/collisions.dart';
+import 'package:flame/input.dart';
+import 'package:flutter/services.dart';
 import 'learning_game.dart';
+import 'door.dart';
+import 'laptop.dart';
 
 
-class Player extends SpriteComponent with HasGameRef, CollisionCallbacks, KeyboardHandler {
+class Player extends SpriteComponent
+    with HasGameReference<LearningGame>, CollisionCallbacks, KeyboardHandler {
 final double speed = 150;
 
 
@@ -10,10 +16,10 @@ Player() : super(size: Vector2(64, 64));
 
 
 @override
-Future<void> onLoad() async {
-sprite = await gameRef.loadSprite('assets/images/player.png');
-add(RectangleHitbox());
-}
+  Future<void> onLoad() async {
+    sprite = await gameRef.loadSprite('assets/images/player.png');
+    add(RectangleHitbox());
+  }
 
 
 Vector2 moveDirection = Vector2.zero();
@@ -29,7 +35,7 @@ position.clamp(Vector2.zero() + size/2, gameRef.size - size/2);
 
 
 @override
-bool onKeyEvent(RawKeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
+  bool onKeyEvent(RawKeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
 // basic keyboard support for debugging
 moveDirection.setZero();
 if (keysPressed.contains(LogicalKeyboardKey.arrowLeft)) moveDirection.x = -1;
@@ -42,8 +48,8 @@ return true;
 
 
 @override
-void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
-super.onCollision(intersectionPoints, other);
+  void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
+    super.onCollision(intersectionPoints, other);
 if (other is Laptop) {
 // when colliding with laptop, show quiz overlay
 (gameRef as LearningGame).showQuiz();
