@@ -93,8 +93,9 @@ class _GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
                           'LevelMessageOverlay': (ctx, g) =>
                               LevelMessageOverlay(
                                 game: g as LearningGame,
-                                message: 'Great, go to next level!',
+                                message: 'Great, You have cleared the level!',
                               ),
+                              
                         },
                         initialActiveOverlays: const [],
                       ),

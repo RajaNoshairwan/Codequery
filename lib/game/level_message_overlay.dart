@@ -1,84 +1,103 @@
+// lib/game/level_message_overlay.dart
+
 import 'package:flutter/material.dart';
+import '../screens/game_screen.dart'; // adjust import if needed
+
 import 'learning_game.dart';
 
-class LevelMessageOverlay extends StatefulWidget {
+class LevelMessageOverlay extends StatelessWidget {
   final LearningGame game;
   final String message;
+
   const LevelMessageOverlay({
     super.key,
     required this.game,
     required this.message,
   });
 
-  @override
-  State<LevelMessageOverlay> createState() => _LevelMessageOverlayState();
-}
-
-class _LevelMessageOverlayState extends State<LevelMessageOverlay>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _fadeAnimation;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller =
-        AnimationController(vsync: this, duration: const Duration(milliseconds: 600));
-    _fadeAnimation = CurvedAnimation(parent: _controller, curve: Curves.easeInOut);
-    _controller.forward();
-
-    // Auto close after 2.5 seconds
-    Future.delayed(const Duration(seconds: 3), () {
-      if (mounted) {
-        widget.game.overlays.remove('LevelMessageOverlay');
-      }
-    });
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
+  // Helper: determine next level based on current difficulty
+  String? _getNextLevel(String currentLevel) {
+    switch (currentLevel.toLowerCase()) {
+      case 'easy':
+        return 'Medium';
+      case 'medium':
+        return 'Hard';
+      case 'hard':
+        return null; // no next level
+      default:
+        return null;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return FadeTransition(
-      opacity: _fadeAnimation,
+    final nextLevel = _getNextLevel(game.difficulty);
+
+    return Center(
       child: Container(
-        color: Colors.black.withOpacity(0.6),
-        child: Center(
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 30),
-            decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                colors: [Colors.cyanAccent, Colors.blueAccent],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              borderRadius: BorderRadius.circular(20),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.blueAccent.withOpacity(0.4),
-                  blurRadius: 20,
-                  spreadRadius: 5,
-                ),
-              ],
+        margin: const EdgeInsets.all(24),
+        padding: const EdgeInsets.all(24),
+        decoration: BoxDecoration(
+          color: Colors.deepPurple.shade800.withOpacity(0.9),
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.4),
+              blurRadius: 20,
+              spreadRadius: 4,
             ),
-            child: Text(
-              widget.message,
+          ],
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              message,
               textAlign: TextAlign.center,
               style: const TextStyle(
-                fontSize: 26,
+                color: Colors.white,
+                fontSize: 22,
                 fontWeight: FontWeight.bold,
-                color: Colors.black,
-                letterSpacing: 1.2,
-                shadows: [
-                  Shadow(color: Colors.white, blurRadius: 8),
-                ],
+                letterSpacing: 0.5,
               ),
             ),
-          ),
+            const SizedBox(height: 20),
+            if (nextLevel != null)
+              ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.cyanAccent,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 28, vertical: 14),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(14),
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                      builder: (_) => GameScreen(level: nextLevel),
+                    ),
+                  );
+                },
+                icon: const Icon(Icons.arrow_forward, color: Colors.black),
+                label: Text(
+                  'Go to $nextLevel Level',
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
+              )
+            else
+              const Text(
+                "🎉 You've completed all levels!",
+                style: TextStyle(
+                  color: Colors.white70,
+                  fontSize: 16,
+                ),
+              ),
+          ],
         ),
       ),
     );
