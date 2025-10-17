@@ -92,14 +92,14 @@ class _QuizOverlayState extends State<QuizOverlay>
   /// ✅ FIXED FUNCTION
   /// This just hides the overlay and resumes the game — no navigation involved.
   void _closeQuiz() {
-    if (mounted) {
-      _slideController.reverse().then((_) {
-        controller.clear();
-        attempts = 0;
+    if (!mounted) return;
+
+        // Immediately hide overlay (visually & logically)
         widget.game.overlays.remove('QuizOverlay');
         widget.game.resumeEngine();
-      });
-    }
+
+        // Then play the slide-out animation for smoothness
+        _slideController.reverse();
   }
 
   @override
