@@ -62,6 +62,7 @@ class LearningGame extends FlameGame
     if (correct) {
       door.open();
       onMessage?.call('Door opened!');
+      overlays.add('LevelMessageOverlay');
     }
   }
 

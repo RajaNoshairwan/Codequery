@@ -3,7 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:flame/game.dart';
 import 'package:codequest/game/learning_game.dart';
-import '../game/quiz_overlay.dart';
+import 'package:codequest/game/quiz_overlay.dart';
+import 'package:codequest/game/level_message_overlay.dart'; // <-- IMPORTED
 
 class GameScreen extends StatefulWidget {
   final String level;
@@ -88,10 +89,16 @@ class _GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
                         overlayBuilderMap: {
                           'QuizOverlay': (ctx, g) =>
                               QuizOverlay(game: g as LearningGame),
+                          // Correct builder signature for LevelMessageOverlay:
+                          'LevelMessageOverlay': (ctx, g) =>
+                              LevelMessageOverlay(
+                                game: g as LearningGame,
+                                message: 'Great, go to next level!',
+                              ),
                         },
                         initialActiveOverlays: const [],
                       ),
-                      _buildControlPanel(),
+                      _buildControlPanel(), // <-- NO ARGUMENTS here
                     ],
                   ),
                 ),
@@ -187,6 +194,7 @@ class _GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
     );
   }
 
+  // Keep this method signature with no parameters.
   Widget _buildControlPanel() {
     return Positioned(
       left: 0,
