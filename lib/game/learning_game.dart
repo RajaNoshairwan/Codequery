@@ -17,39 +17,39 @@ class LearningGame extends FlameGame
 
   LearningGame({this.difficulty = 'Easy', this.onMessage});
 
-@override
-Future<void> onLoad() async {
-  await images.loadAll([
-    GameAssets.player,
-    GameAssets.doorClosed,
-    GameAssets.doorOpen,
-    GameAssets.laptop,
-    GameAssets.background,
-  ]);
+  @override
+  Future<void> onLoad() async {
+    await images.loadAll([
+      GameAssets.player,
+      GameAssets.doorClosed,
+      GameAssets.doorOpen,
+      GameAssets.laptop,
+      GameAssets.background,
+    ]);
 
-  // background
-  add(SpriteComponent()
-    ..sprite = await loadSprite(GameAssets.background)
-    ..size = size);
+    // background
+    add(SpriteComponent()
+      ..sprite = await loadSprite(GameAssets.background)
+      ..size = size);
 
-  // door
-  door = Door()
-    ..position = Vector2(size.x - 120, size.y / 2 - 32)
-    ..anchor = Anchor.topLeft;
-  add(door);
+    // door
+    door = Door()
+      ..position = Vector2(size.x - 120, size.y / 2 - 32)
+      ..anchor = Anchor.topLeft;
+    add(door);
 
-  // laptop
-  laptop = Laptop()
-    ..position = Vector2(size.x / 2 - 32, size.y / 2 - 32)
-    ..anchor = Anchor.topLeft;
-  add(laptop);
+    // laptop
+    laptop = Laptop()
+      ..position = Vector2(size.x / 2 - 32, size.y / 2 - 32)
+      ..anchor = Anchor.topLeft;
+    add(laptop);
 
-  // player
-  player = Player()
-    ..position = Vector2(64, size.y / 2)
-    ..anchor = Anchor.center;
-  add(player);
-}
+    // player
+    player = Player()
+      ..position = Vector2(64, size.y / 2)
+      ..anchor = Anchor.center;
+    add(player);
+  }
 
   void showQuiz() {
     pauseEngine();
@@ -75,6 +75,10 @@ Future<void> onLoad() async {
 
 // Interact with nearby objects (e.g., at laptop/door)
   void interact() {
+    // Prevent re-triggering while overlay is already visible
+    if (overlays.isActive('QuizOverlay')) {
+      return;
+    }
     // If the door is open and player is near it, show placeholder next step
     if (door.isOpen && (player.position - door.position).length < 80) {
       onMessage?.call('Next challenge coming soon...');

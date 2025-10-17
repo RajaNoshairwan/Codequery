@@ -46,8 +46,8 @@ class Player extends SpriteComponent
     }
     moveDirection.normalize();
 
-    // Interact via 'F' key
-    if (keysPressed.contains(LogicalKeyboardKey.keyF)) {
+    // Interact via 'F' key on key down only to avoid repeats
+    if (event is KeyDownEvent && event.logicalKey == LogicalKeyboardKey.keyF) {
       game.interact();
     }
     return true;
